@@ -20,6 +20,7 @@ let real_ans = "0;"
 //var subbing = false;
 //var multiplying = false;
 //var dividing = false;
+var oren = false;
 function load()
 {
 document.getElementById("p1-score").innerHTML = p1 + " : " + p1_score;
@@ -89,7 +90,8 @@ function submitplus()
 
   document.getElementById("output").style.display = "block";
   document.getElementById("question").innerHTML = first_num + " + " + second_num;
-  document.getElementById("numDiv").style.display = "none";
+  document.getElementById("numDiv").style.display = "none";     
+  oren = true;
 }
   
 
@@ -110,6 +112,7 @@ function submitsubstract()
     document.getElementById("output").style.display = "block";
     document.getElementById("question").innerHTML = first_num + " - " + second_num;
     document.getElementById("numDiv").style.display = "none";
+    oren = true;
   }
 
 }
@@ -129,6 +132,7 @@ function submitmultiply()
     document.getElementById("output").style.display = "block";
     document.getElementById("question").innerHTML = first_num + " × " + second_num;
     document.getElementById("numDiv").style.display = "none";
+    oren = true;
   }
 
 }
@@ -148,7 +152,7 @@ function submitdivide()
     document.getElementById("output").style.display = "block";
     document.getElementById("question").innerHTML = first_num + " ÷ " + second_num;
     document.getElementById("numDiv").style.display = "none";
-    
+    oren = true;
   }
 }
 function check()
@@ -157,6 +161,7 @@ function check()
   document.getElementById("output").style.display = "none";
   document.getElementById("numDiv").style.display = "block";
   document.getElementById("answer_input").value = "";
+  oren = false;
   
   if (real_ans == an)
   {
@@ -187,3 +192,42 @@ function check()
   }
 
 }
+addEventListener("keydown", function (e)
+{
+  if (e.key === "Enter") {  
+    an = document.getElementById("answer_input").value;
+    document.getElementById("output").style.display = "none";
+    document.getElementById("numDiv").style.display = "block";
+    document.getElementById("answer_input").value = "";
+ 
+    
+    if (real_ans == an)
+    {
+      if (answer_turn == p1)
+      {
+        p1_score = p1_score + 1;
+        document.getElementById("p1-score").innerHTML = p1 + " : " + p1_score;
+        
+      } else
+      {
+        p2_score = p2_score + 1;
+        document.getElementById("p2-score").innerHTML = p2 + " : " + p2_score;
+      
+      }
+    }
+    if (question_turn == p1)
+    {
+      question_turn = p2;
+      answer_turn = p1;
+      document.getElementById("question_turn").innerHTML = "Question Turn - " + question_turn;
+      document.getElementById("answer_turn").innerHTML = "Answer Turn - " + answer_turn;
+    } else 
+    {
+      question_turn = p1;
+      answer_turn = p2;
+      document.getElementById("question_turn").innerHTML = "Question Turn - " + question_turn;
+      document.getElementById("answer_turn").innerHTML = "Answer Turn - " + answer_turn;
+      oren = false;
+    }
+  }
+})
